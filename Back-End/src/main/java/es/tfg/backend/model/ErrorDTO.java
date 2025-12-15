@@ -10,4 +10,5 @@ import java.time.LocalDateTime;
 public class ErrorDTO {
     private String message;
     private LocalDateTime timestamp;
+    private String className;
 }

@@ -1,11 +1,12 @@
-package es.tfg.backend.servers;
+package es.tfg.backend.services;
 
 import es.tfg.backend.entitys.Usuario;
-import es.tfg.backend.exception.EmailAlrreadyExistsException;
-import es.tfg.backend.exception.UsernameAlreadyExistsException;
+import es.tfg.backend.exception.auth.EmailAlrreadyExistsException;
+import es.tfg.backend.exception.auth.EmailNotFoundException;
+import es.tfg.backend.exception.auth.UsernameAlreadyExistsException;
 import es.tfg.backend.mappers.UsuarioMapper;
-import es.tfg.backend.model.AuthRequestDTO;
-import es.tfg.backend.model.AuthResponseDTO;
+import es.tfg.backend.model.LoginRequestDTO;
+import es.tfg.backend.model.LoginResponseDTO;
 import es.tfg.backend.model.RegisterRequestDTO;
 import es.tfg.backend.repositorys.RolRepository;
 import es.tfg.backend.repositorys.UsuarioRepository;
@@ -23,7 +24,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioService {
+public class AuthService {
 
     // --------------- INYECCIONES POR CONSTRUCTOR ---------------
     private final UsuarioMapper usuarioMapper;
@@ -36,16 +37,20 @@ public class UsuarioService {
 
     // -------------- MÉTODOS LLAMADOS POR ENDPOINTS --------------
 
-    public AuthResponseDTO login(AuthRequestDTO request) {
+    public LoginResponseDTO login(LoginRequestDTO request) {
+
+
+        String username = usuarioRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new EmailNotFoundException(request.getEmail()))
+                .getUsername();
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(username, request.getPassword())
         );
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String token = jwtService.generateToken((UserDetails) authentication.getPrincipal());
 
-        String token = jwtService.generateToken(userDetails);
-
-        return new AuthResponseDTO(token);
+        return new LoginResponseDTO(token);
     }
 
     public Void register(RegisterRequestDTO request) {
@@ -60,7 +65,9 @@ public class UsuarioService {
                     throw new UsernameAlreadyExistsException(request.getUsername());
                 });
 
-        // Encriptación de la contraseña
+        // pendiente mailjet o similar para verificacion de email
+
+        // Encriptado de la contraseña
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         request.setPassword(passwordEncoder.encode(request.getPassword()));
 
@@ -71,6 +78,10 @@ public class UsuarioService {
         usuarioRepository.save(user);
 
         return null;
+    }
+
+    public Boolean checkEmailExists(String email) {
+        return usuarioRepository.findByEmail(email).isPresent();
     }
 
     // -------------------- MÉTODOS AUXILIARES --------------------

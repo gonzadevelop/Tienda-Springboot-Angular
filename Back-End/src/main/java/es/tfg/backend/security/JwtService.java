@@ -38,6 +38,7 @@ public class JwtService {
 
     }
 
+    // ------------------------------- GENERAR TOKEN ---------------------------
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
@@ -56,17 +57,19 @@ public class JwtService {
                 .compact();
     }
 
-    // -------------------------------- PROCESAR, LEER EL TOKEN ------------------
 
+    // -------------------------------- PROCESAR, LEER EL TOKEN ------------------
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
+
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
+    // ------------------------------- VALIDAR TOKEN ---------------------------
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
@@ -83,5 +86,7 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
+
+
 }
 

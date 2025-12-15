@@ -3,7 +3,7 @@ package es.tfg.backend.model;
 import lombok.Data;
 
 @Data
-public class AuthRequestDTO {
+public class LoginRequestDTO {
     private String email;
     private String password;
 }

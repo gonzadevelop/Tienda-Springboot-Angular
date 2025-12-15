@@ -1,4 +1,4 @@
-package es.tfg.backend.exception;
+package es.tfg.backend.exception.auth;
 
 public class UsernameAlreadyExistsException extends RuntimeException {
     public UsernameAlreadyExistsException(String username) {

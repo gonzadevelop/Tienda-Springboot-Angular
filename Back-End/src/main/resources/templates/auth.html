@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Autenticación</title>
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body class="bg-light">
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow auth-card">
+      <div class="row g-0">
+        <!-- Left black panel -->
+        <div class="col-md-5 left-panel text-white d-flex flex-column justify-content-between p-5">
+          <div>
+            <h1 class="display-5 fw-bold">BIENVE-<br>NIDO</h1>
+            <hr class="left-underline">
+            <p class="mt-4 small">
+              Compra millones de eventos en vivo, descubre conciertos, partidos, teatro y mucho más - y todo esto con una venta de entradas segura y sencilla.
+            </p>
+          </div>
+          <div class="text-end small logo-t">t</div>
+        </div>
+
+        <!-- Right white panel -->
+        <div class="col-md-7 p-5">
+          <h3 class="fw-bold">INICIA SESIÓN O CREA UNA CUENTA</h3>
+          <p class="text-muted">Si no tienes una cuenta, te pediremos que crees una.</p>
+
+          <form class="mt-4" action="#" method="post">
+            <div class="mb-3">
+              <label for="email" class="form-label">Dirección de correo electrónico</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="" required>
+            </div>
+
+            <button type="submit" class="btn btn-secondary w-100 py-2 mb-3" disabled>Continuar</button>
+
+            <div class="d-flex align-items-center mb-3">
+              <div class="flex-grow-1" style="height:1px;background:#e9ecef;"></div>
+              <div class="px-3 text-muted">o</div>
+              <div class="flex-grow-1" style="height:1px;background:#e9ecef;"></div>
+            </div>
+
+            <button type="button" class="btn btn-outline-dark w-100 py-2 mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lock me-2" viewBox="0 0 16 16">
+                <path d="M11 5a3 3 0 1 0-6 0 3 3 0 0 0 6 0z"/>
+                <path d="M2 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H2z"/>
+                <path d="M14 10v1h1a1 1 0 0 0 1-1V9a2 2 0 1 0-4 0v1h1v1h1z"/>
+              </svg>
+              Iniciar sesión con clave de acceso
+            </button>
+
+            <div class="text-center mb-3">
+              <a href="#" class="text-primary">How To Add A Passkey</a>
+            </div>
+
+            <p class="small text-muted">Al continuar hacia la siguiente página, aceptas las <a href="#">Condiciones de uso</a> y comprendes que la información se usará como se describe en nuestra <a href="#">Política de Privacidad</a>.</p>
+
+            <p class="small text-muted">Según lo establecido en nuestra Política de Privacidad, podemos utilizar su información para marketing por correo electrónico, incluyendo promociones y actualizaciones sobre nuestros productos o los de terceros. Puede darse de baja de nuestros correos electrónicos de marketing en cualquier momento.</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

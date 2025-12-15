@@ -1,0 +1,26 @@
+.auth-card{
+  width: 900px;
+  max-width: 95vw;
+  border: none;
+  overflow: hidden;
+}
+.left-panel{
+  background: #0b0b0b;
+  min-height: 520px;
+}
+.left-underline{
+  width: 60px;
+  height: 3px;
+  background: #ff0000;
+  border: none;
+  margin-top: 10px;
+}
+.logo-t{
+  font-size: 28px;
+  opacity: 0.8;
+}
+@media (max-width: 768px){
+  .left-panel{display:none}
+  .auth-card{width:100%;}
+}
+

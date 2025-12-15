@@ -71,7 +71,7 @@ public class Usuario implements UserDetails {
     private LocalDateTime fechaCreacion;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
 
@@ -93,10 +93,12 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario")
     private Set<Pedido> pedidos = new LinkedHashSet<>();
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String roleName = rol.getNombre().toUpperCase();
+        if (!roleName.startsWith("ROLE_")) {
+            roleName = "ROLE_" + roleName;
+        }
 
         return List.of(new SimpleGrantedAuthority(roleName));
     }
