@@ -27,6 +27,13 @@
   <button type="submit" class="btn btn-secondary w-100 py-2 mb-3" [disabled]="loginForm.invalid">
     Iniciar Sesión
   </button>
+
+  <!-- Separador entre botones -->
+  <div role="separator" aria-orientation="horizontal" style="height:1px;background:rgba(0,0,0,0.06);margin:0.5rem 0 0.75rem;width:100%;border-radius:1px;"></div>
+
+  <button type="button" class="btn-back w-100 py-2 mb-3" (click)="goBack()" aria-label="Volver">
+    Volver
+  </button>
 </form>
 
 <p class="small text-muted text-center">

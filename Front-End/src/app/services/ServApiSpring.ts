@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import ILoginRequest from '../model/ILoginRequest';
+import ILoginResponse from '../model/ILoginResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,16 @@ export class ServApiSpring {
         null,
         {
           params,
+          observe: 'response'
+        }
+      );
+  }
+  public login( requestBody:ILoginRequest ):Observable<HttpResponse<ILoginResponse>> {
+    return this.http
+      .post<ILoginResponse>(
+        this.baseUrl + 'auth/login',
+        requestBody,
+        {
           observe: 'response'
         }
       );

@@ -1,5 +1,20 @@
-import {Component, input, InputSignal, OnInit, signal} from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  InputSignal,
+  OnDestroy,
+  OnInit,
+  output,
+  OutputEmitterRef,
+  signal, WritableSignal
+} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ServApiSpring} from '../../../../services/ServApiSpring';
+import {HttpResponse} from '@angular/common/http';
+import ILoginResponse from '../../../../model/ILoginResponse';
+import ILoginRequest from '../../../../model/ILoginRequest';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -9,9 +24,15 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login implements OnInit {
-  public email:InputSignal<String> =input<String>('');
-  protected mostrarPassword = signal<boolean>(false);
+export class Login implements OnInit, OnDestroy {
+  private servApiSpring:ServApiSpring = inject( ServApiSpring );
+  private suscripcionLogin?: Subscription;
+
+
+  public email:InputSignal<string> = input<string>('');
+  public atras:OutputEmitterRef<void> = output<void>();
+
+  protected mostrarPassword:WritableSignal<boolean> = signal<boolean>(false);
 
   protected loginForm:FormGroup = new FormGroup(
     {
@@ -20,17 +41,37 @@ export class Login implements OnInit {
   );
 
 
-  ngOnInit(): void {
-    console.log('componente de login cargado...');
-    console.log('valor del email recibido como input:', this.email());
+  login(): void {
+    console.log('Iniciando sesión con:', this.email(), this.loginForm.value.password);
+    const request: ILoginRequest = {
+      email: this.email(),
+      password: this.loginForm.value.password
+    };
+    this.suscripcionLogin = this.servApiSpring.login(request).subscribe(
+      (response: HttpResponse<ILoginResponse>):void => {{
+          if (response.status === 200) {
+            const token = response.body?.token || '';
+            console.log('Inicio de sesión exitoso. Token:', token);
+          }
+        }
+      }
+    )
   }
 
   togglePasswordVisibility(): void {
     this.mostrarPassword.set(!this.mostrarPassword());
   }
 
-  login(): void {
-      console.log('Iniciando sesión con:', this.email(), this.loginForm.value.password);
-      // Aquí irá la lógica de login con el servicio
-    }
+  goBack(): void {
+    this.atras.emit();
+  }
+
+  ngOnInit(): void {
+    console.log('componente de login cargado...');
+    console.log('valor del email recibido como input:', this.email());
+  }
+
+  ngOnDestroy():void {
+    this.suscripcionLogin?.unsubscribe();
+  }
 }

@@ -1,5 +1,17 @@
-import {Component, input, InputSignal, OnInit, signal, WritableSignal} from '@angular/core';
+import {
+  Component, inject,
+  input,
+  InputSignal,
+  OnDestroy,
+  OnInit,
+  output,
+  OutputEmitterRef,
+  signal,
+  WritableSignal
+} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ServApiSpring} from '../../../../services/ServApiSpring';
+import ILoginRequest from '../../../../model/ILoginRequest';
 
 @Component({
   selector: 'app-registro',
@@ -7,8 +19,12 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })
-export class Registro implements OnInit {
-  public email:InputSignal<String> = input<String>('');
+export class Registro implements OnInit, OnDestroy {
+  private servApiSpring:ServApiSpring = inject( ServApiSpring );
+
+  public email:InputSignal<string> = input<string>('');
+  public atras:OutputEmitterRef<void> = output<void>();
+
   protected mostrarPassword:WritableSignal<boolean> = signal<boolean>(false);
 
   protected registroForm:FormGroup = new FormGroup({
@@ -21,23 +37,31 @@ export class Registro implements OnInit {
     telefono: new FormControl('', [Validators.pattern(/^[0-9]{9}$/)])
   });
 
-  ngOnInit(): void {
-    console.log('componente de registro cargado...');
-    console.log('valor del email recibido como input:', this.email());
+
+
+  registrar(): void {
+    if (this.registroForm.valid) {
+      const registroData:ILoginRequest = {
+        email: this.email(),
+        password: this.registroForm.value
+      };
+      console.log('Registrando usuario con:', registroData);
+    }
   }
 
   togglePasswordVisibility(): void {
     this.mostrarPassword.set(!this.mostrarPassword());
   }
 
-  registrar(): void {
-    if (this.registroForm.valid) {
-      const registroData = {
-        email: this.email(),
-        ...this.registroForm.value
-      };
-      console.log('Registrando usuario con:', registroData);
-      // Aquí irá la lógica de registro con el servicio
-    }
+  goBack(): void {
+    this.atras.emit();
+  }
+
+  ngOnInit(): void {
+    console.log('componente de registro cargado...');
+    console.log('valor del email recibido como input:', this.email());
+  }
+
+  ngOnDestroy():void {
   }
 }

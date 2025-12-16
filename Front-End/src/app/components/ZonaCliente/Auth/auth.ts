@@ -27,6 +27,10 @@ export class Auth implements OnInit {
     }
   }
 
+  handlerOnAtras():void {
+    this.vistaAtual.set('check-email');
+  }
+
   handlerOnEmail( email: String ):void {
     this.emailSignal.set(email);
   }

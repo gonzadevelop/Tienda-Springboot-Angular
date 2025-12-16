@@ -10,7 +10,6 @@
       class="form-control"
       id="username"
       formControlName="username"
-      placeholder="usuario123"
       required
       [class.is-invalid]="registroForm.get('username')?.invalid && registroForm.get('username')?.touched"
     >
@@ -69,7 +68,6 @@
         class="form-control"
         id="nombre"
         formControlName="nombre"
-        placeholder="Juan"
         required
         [class.is-invalid]="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched"
       >
@@ -88,7 +86,6 @@
         class="form-control"
         id="apellidos"
         formControlName="apellidos"
-        placeholder="Pérez García"
         required
         [class.is-invalid]="registroForm.get('apellidos')?.invalid && registroForm.get('apellidos')?.touched"
       >
@@ -129,13 +126,12 @@
   <!-- DNI y Teléfono (Opcionales) -->
   <div class="row mb-3">
     <div class="col-md-6">
-      <label for="dni" class="form-label">DNI <span class="text-muted"><br>(Opcional)</span></label>
+      <label for="dni" class="form-label">DNI </label>
       <input
         type="text"
         class="form-control"
         id="dni"
         formControlName="dni"
-        placeholder="12345678A"
         [class.is-invalid]="registroForm.get('dni')?.invalid && registroForm.get('dni')?.touched"
       >
       @if (registroForm.get('dni')?.invalid && registroForm.get('dni')?.touched) {
@@ -147,13 +143,12 @@
       }
     </div>
     <div class="col-md-6">
-      <label for="telefono" class="form-label">Teléfono de contacto <span class="text-muted">(Opcional)</span></label>
+      <label for="telefono" class="form-label">Teléfono de contacto</label>
       <input
         type="tel"
         class="form-control"
         id="telefono"
         formControlName="telefono"
-        placeholder="612345678"
         [class.is-invalid]="registroForm.get('telefono')?.invalid && registroForm.get('telefono')?.touched"
       >
       @if (registroForm.get('telefono')?.invalid && registroForm.get('telefono')?.touched) {
@@ -169,9 +164,15 @@
   <button type="submit" class="btn btn-secondary w-100 py-2 mb-3" [disabled]="registroForm.invalid">
     Crear Cuenta
   </button>
+
+  <!-- Separador entre botones -->
+  <div role="separator" aria-orientation="horizontal" class="separator"></div>
+
+  <button type="button" class="btn-back w-100 py-2 mb-3" (click)="goBack()" aria-label="Volver">
+    Volver
+  </button>
 </form>
 
 <p class="small text-muted text-center">
   Al crear una cuenta, aceptas las <a href="#" class="text-decoration-none">Condiciones de uso</a> y la <a href="#" class="text-decoration-none">Política de Privacidad</a>.
 </p>
-

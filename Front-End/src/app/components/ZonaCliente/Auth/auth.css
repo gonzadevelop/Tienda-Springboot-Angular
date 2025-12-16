@@ -9,11 +9,12 @@
   min-height: 520px;
 }
 .left-underline{
-  width: 60px;
-  height: 3px;
+  max-width: 280px;
+  height: 6px;
   background: #ff0000;
   border: none;
-  margin-top: 10px;
+  margin-top: 14px;
+  border-radius: 4px;
 }
 .logo-t{
   font-size: 28px;
@@ -23,4 +24,3 @@
   .left-panel{display:none}
   .auth-card{width:100%;}
 }
-

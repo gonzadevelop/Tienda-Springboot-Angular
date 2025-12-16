@@ -21,9 +21,13 @@
                   (emailChecked)="handlerOnEmailChecked($event)"
                   (email)="handlerOnEmail($event)"/>
           } @case ('login') {
-            <app-login [email]="emailSignal()" />
+            <app-login
+                  [email]="emailSignal()"
+                  (atras)="handlerOnAtras()"/>
           } @case ('registro') {
-            <app-registro [email]="emailSignal()" />
+            <app-registro
+              [email]="emailSignal()"
+              (atras)="handlerOnAtras()"/>
           }
         }
       </div>
