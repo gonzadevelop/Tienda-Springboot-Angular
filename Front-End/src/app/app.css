@@ -45,3 +45,15 @@
 /* Compensar header fijo para que el contenido no quede oculto bajo él */
 :root{ --header-height: 84px; }
 .site-root{ padding-top: var(--header-height); }
+
+/* Estado inactivo aplicado al padre cuando se abre el panel de categorías */
+.container-fluid.inactive{
+  opacity: 0.45;
+  transition: opacity 160ms ease;
+}
+.container-fluid.inactive .main-nav{ pointer-events: none; }
+.container-fluid.inactive .hamburger{ pointer-events: none; }
+.container-fluid.inactive .search-form{ pointer-events: none; }
+
+/* Permitir que el header y otros elementos con mayor z-index sigan interactuando */
+.site-root .site-header, .site-header { pointer-events: auto; }

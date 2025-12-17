@@ -6,6 +6,7 @@ import ILoginResponse from '../model/ILoginResponse';
 import IRegisterRequest from '../model/IRegisterRequest';
 import ITokenRequest from '../model/ITokenRequest';
 import IUsernameResponse from '../model/IUsernameResponse';
+import ICategoriaResponse from '../model/ICategoriaResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -58,5 +59,25 @@ export class ServApiSpring {
           observe: 'response'
         }
       );
+  }
+
+  public getCategorias(nombreCat:string | null): Observable<HttpResponse<ICategoriaResponse[]>> {
+    if (nombreCat===null) {
+      return this.http
+        .get<ICategoriaResponse[]>(
+          this.baseUrl + 'api/categorias/padres-hijas',
+          {
+            observe: 'response'
+          }
+        );
+    } else {
+      return this.http
+        .get<ICategoriaResponse[]>(
+          this.baseUrl + `api/categorias/padres-hijas?nombre=${nombreCat}`,
+          {
+            observe: 'response'
+          }
+        )
+    }
   }
 }

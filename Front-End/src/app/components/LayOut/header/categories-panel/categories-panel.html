@@ -1,18 +1,18 @@
 <div class="categories-overlay" [class.open]="open" (click)="onClose()" aria-hidden="true"></div>
 <aside class="categories-panel" [class.open]="open" role="dialog" aria-label="Categorías" [attr.aria-hidden]="open ? 'false' : 'true'">
   <div class="categories-header d-flex align-items-center justify-content-between">
-    <h3 class="mb-0">Categorías</h3>
+    <h3 class="mb-0">{{categoriaSeleccionada}}</h3>
     <button class="close-cat" type="button" aria-label="Cerrar" (click)="onClose()">✕</button>
   </div>
 
-  <nav class="categories-list">
-    <ul>
-      <li>Componentes</li>
-      <li>Ordenadores</li>
-      <li>Periféricos</li>
-      <li>Consolas y videojuegos</li>
-      <li>Smartphones y tablets</li>
-      <!-- más items... -->
-    </ul>
-  </nav>
+  @let categorias = observableCategorias | async;
+    <nav class="categories-list" role="menu">
+      <ul>
+        @for (cat of categorias; track $index) {
+          <li class="has-children" role="none">
+            <div class="cat-item" role="menuitem" (click)="onCatClick(cat)">{{cat.nombre}}</div>
+          </li>
+        }
+      </ul>
+    </nav>
 </aside>
