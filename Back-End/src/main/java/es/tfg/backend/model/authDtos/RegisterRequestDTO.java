@@ -1,4 +1,4 @@
-package es.tfg.backend.model;
+package es.tfg.backend.model.authDtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

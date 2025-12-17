@@ -37,5 +37,4 @@ public class Categoria {
 
     @OneToMany(mappedBy = "categoria")
     private Set<Producto> productos = new LinkedHashSet<>();
-
 }

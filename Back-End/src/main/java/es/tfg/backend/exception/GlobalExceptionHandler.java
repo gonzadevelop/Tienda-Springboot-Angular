@@ -7,6 +7,7 @@ import es.tfg.backend.exception.auth.UsernameNotFoundException;
 import es.tfg.backend.model.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,6 +21,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 ErrorDTO.builder()
                         .message("Error genérico: " + ex.getMessage())
+                        .timestamp(java.time.LocalDateTime.now())
+                        .className(ex.getClass().getName())
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorDTO> handleBadCredentialsException(BadCredentialsException ex) {
+        return ResponseEntity.status(401).body(
+                ErrorDTO.builder()
+                        .message("Credenciales incorrectas: " + ex.getMessage())
                         .timestamp(java.time.LocalDateTime.now())
                         .className(ex.getClass().getName())
                         .build()

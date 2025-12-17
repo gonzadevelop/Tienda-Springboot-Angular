@@ -1,10 +1,8 @@
 package es.tfg.backend.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
-public class LoginResponseDTO {
+public class TokenRequestDTO {
     private String token;
 }

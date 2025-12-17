@@ -27,6 +27,8 @@ public class JwtService {
     private String secret;
     @Value("${JWT_EXPIRATION}")
     private String expiration;
+    @Value("${JWT_REFRESH_EXPIRATION}")
+    private String refreshExpiration;
 
     private SecretKey generateSecureKey() {
         return Jwts.SIG.HS256.key().build();
@@ -42,21 +44,25 @@ public class JwtService {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
-        Set<String> roles = userDetails.getAuthorities().stream()
+        String rol = userDetails.getAuthorities()
+                .stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
+                .findFirst()
+                .orElseThrow(
+                        () -> new RuntimeException("El usuario no tiene ningún rol asignado")
+                );
 
-        claims.put("roles", roles);
+        claims.put("rol", rol);
+        claims.put("type", "access");
 
         return Jwts.builder()
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * Integer.parseInt(expiration)))
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * Integer.parseInt(expiration)))
                 .signWith(getSigningKey(), Jwts.SIG.HS256)
                 .compact();
     }
-
 
     // -------------------------------- PROCESAR, LEER EL TOKEN ------------------
     public String extractUsername(String token) {

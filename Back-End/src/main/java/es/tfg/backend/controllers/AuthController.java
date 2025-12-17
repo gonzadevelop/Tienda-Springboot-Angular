@@ -1,8 +1,9 @@
 package es.tfg.backend.controllers;
 
-import es.tfg.backend.model.LoginRequestDTO;
-import es.tfg.backend.model.LoginResponseDTO;
-import es.tfg.backend.model.RegisterRequestDTO;
+import es.tfg.backend.model.authDtos.LoginRequestDTO;
+import es.tfg.backend.model.authDtos.LoginResponseDTO;
+import es.tfg.backend.model.authDtos.RegisterRequestDTO;
+import es.tfg.backend.security.JwtService;
 import es.tfg.backend.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request){
