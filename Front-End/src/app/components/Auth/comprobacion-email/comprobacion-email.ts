@@ -1,6 +1,6 @@
 import {Component, inject, OnDestroy, output, OutputEmitterRef} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ServApiSpring} from '../../../../services/ServApiSpring';
+import {ServApiSpring} from '../../../services/ServApiSpring';
 import {Subscription} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
 
@@ -14,7 +14,7 @@ import {HttpResponse} from '@angular/common/http';
 })
 export class ComprobacionEmail implements OnDestroy {
   public emailChecked:OutputEmitterRef<boolean> = output<boolean>();
-  public email:OutputEmitterRef<String> = output<String>();
+  public email:OutputEmitterRef<string> = output<string>();
 
   private servApiSpring:ServApiSpring = inject( ServApiSpring );
   private suscripcionComprobarEmail?: Subscription;
@@ -55,7 +55,7 @@ export class ComprobacionEmail implements OnDestroy {
     this.emailChecked.emit( isRegistered );
   }
 
-  onEmailSubmit( email: String ):void {
+  onEmailSubmit( email: string ):void {
     this.email.emit( email );
   }
 

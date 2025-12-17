@@ -1,0 +1,39 @@
+.auth-card{
+  width: 900px;
+  max-width: 95vw;
+  border: none;
+  overflow: hidden;
+}
+.left-panel{
+  background: #0b0b0b;
+  min-height: 520px;
+}
+.left-underline{
+  max-width: 280px;
+  height: 6px;
+  background: #ff0000;
+  border: none;
+  margin-top: 14px;
+  border-radius: 4px;
+}
+.logo-t{
+  font-size: 28px;
+  opacity: 0.8;
+}
+.auth-viewport{
+  /* Asumimos una altura de header aproximada; se puede sobrescribir mediante una variable CSS global si se desea */
+  --header-height: 84px;
+  min-height: calc(100vh - var(--header-height));
+  padding-top: 18px; /* separación mínima con el header */
+  padding-bottom: 24px;
+  align-items: center;
+}
+
+/* Mantener el centro vertical en pantallas pequeñas pero permitir scroll si no cabe */
+@media (max-height: 700px){
+  .auth-viewport{min-height: calc(100vh - var(--header-height)); padding-top: 12px; padding-bottom:12px}
+}
+@media (max-width: 768px){
+  .left-panel{display:none}
+  .auth-card{width:100%;}
+}

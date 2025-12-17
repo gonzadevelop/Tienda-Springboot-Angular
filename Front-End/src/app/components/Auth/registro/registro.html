@@ -110,9 +110,9 @@
       [class.is-invalid]="registroForm.get('genero')?.invalid && registroForm.get('genero')?.touched"
     >
       <option value="" disabled selected>Seleccione una opción</option>
-      <option value="masculino">Masculino</option>
-      <option value="femenino">Femenino</option>
-      <option value="otro">Otro</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+      <option value="Otro">Otro</option>
     </select>
     @if (registroForm.get('genero')?.invalid && registroForm.get('genero')?.touched) {
       <div class="invalid-feedback">

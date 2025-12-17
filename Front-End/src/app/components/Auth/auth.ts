@@ -1,7 +1,8 @@
-import {Component, OnInit, signal, Signal, WritableSignal} from '@angular/core';
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {ComprobacionEmail} from './comprobacion-email/comprobacion-email';
-import { Login } from './login/login';
-import { Registro } from './registro/registro';
+import {Login} from './login/login';
+import {Registro} from './registro/registro';
+
 
 @Component({
   selector: 'app-auth',
@@ -15,9 +16,7 @@ import { Registro } from './registro/registro';
 })
 export class Auth implements OnInit {
   protected vistaAtual! :WritableSignal<'check-email' | 'login' | 'registro'>;
-  public emailSignal:WritableSignal<String> = signal<String>('');
-
-
+  public emailSignal:WritableSignal<string> = signal<string>('');
 
   handlerOnEmailChecked( isRegistered: boolean ):void {
     if (isRegistered){
@@ -31,7 +30,7 @@ export class Auth implements OnInit {
     this.vistaAtual.set('check-email');
   }
 
-  handlerOnEmail( email: String ):void {
+  handlerOnEmail( email: string ):void {
     this.emailSignal.set(email);
   }
 

@@ -1,0 +1,39 @@
+<header class="site-header">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="header-left d-flex align-items-center">
+      <a href="/home" class="brand-link d-flex align-items-center" aria-label="Ir al inicio">
+        <img src="/assets/logo.png" alt="GonzaDEV logo" class="brand-logo" />
+      </a>
+      <div class="brand-text ms-3">
+        <div class="logo-t">Gonza Dev Store</div>
+        <div class="muted">Los mejores productos</div>
+      </div>
+    </div>
+
+    <div class="header-center d-flex align-items-center">
+      <button class="hamburger" type="button" aria-label="Abrir categorías" (click)="toggleCategories()">
+        <!-- Icono simple de 3 líneas -->
+        <svg width="20" height="16" viewBox="0 0 20 16" aria-hidden="true">
+          <rect y="1" width="20" height="2" rx="1" fill="white" opacity="0.95"></rect>
+          <rect y="7" width="20" height="2" rx="1" fill="white" opacity="0.95"></rect>
+          <rect y="13" width="20" height="2" rx="1" fill="white" opacity="0.95"></rect>
+        </svg>
+      </button>
+
+      <form class="search-form" role="search" aria-label="Buscar en el sitio">
+        <input type="search" class="search-input" placeholder="Buscar productos" aria-label="Buscar" />
+      </form>
+    </div>
+
+    <nav class="main-nav" aria-label="Navegación principal">
+      @if ( sesionIniciada ) {
+        <app-hola-usuario>
+        </app-hola-usuario>
+      } @else {
+        <a href="/autenticacion" class="nav-link">Inicia Sesion/Registrarse</a>
+      }
+    </nav>
+  </div>
+
+  <app-categories-panel [open]="categoriesOpen" (close)="closeCategories()"></app-categories-panel>
+</header>

@@ -1,0 +1,48 @@
+/* Estilos transferidos del header para el botón "Hola, usuario" */
+.user-actions{ display:flex; align-items:center; gap:8px }
+.user-actions .nav-link{
+  margin-left: 18px;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+.user-actions .nav-link:hover,
+.user-actions .nav-link:focus{
+  color: #ffffff;
+  background: rgba(255,0,0,0.12);
+  text-decoration: none;
+  transform: translateY(-1px);
+  outline: none;
+}
+.user-actions .nav-link:focus-visible{
+  box-shadow: 0 0 0 3px rgba(255,0,0,0.16);
+}
+.user-actions .nav-link.active{
+  color: #ff0000;
+  background: rgba(255,0,0,0.14);
+}
+/* Ajustes específicos para el icono/carrito dentro del componente */
+.user-actions .cart-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px;
+  border-radius:6px;
+}
+.user-actions .cart-link svg{ width:20px; height:20px; display:block }
+
+/* Texto junto al carrito */
+.cart-text{
+  font-size: 14px;
+  color: rgba(255,255,255,0.92);
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+@media (max-width: 576px){
+  /* En dispositivos muy pequeños ocultamos el texto para ahorrar espacio */
+  .cart-text{ display:none }
+}

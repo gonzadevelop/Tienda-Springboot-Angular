@@ -10,11 +10,12 @@ import {
   signal, WritableSignal
 } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {ServApiSpring} from '../../../../services/ServApiSpring';
+import {ServApiSpring} from '../../../services/ServApiSpring';
 import {HttpResponse} from '@angular/common/http';
-import ILoginResponse from '../../../../model/ILoginResponse';
-import ILoginRequest from '../../../../model/ILoginRequest';
+import ILoginResponse from '../../../model/ILoginResponse';
+import ILoginRequest from '../../../model/ILoginRequest';
 import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,11 +27,15 @@ import {Subscription} from 'rxjs';
 })
 export class Login implements OnInit, OnDestroy {
   private servApiSpring:ServApiSpring = inject( ServApiSpring );
+  private router:Router = inject( Router );
+
   private suscripcionLogin?: Subscription;
 
 
   public email:InputSignal<string> = input<string>('');
   public atras:OutputEmitterRef<void> = output<void>();
+
+  protected badPassword:WritableSignal<boolean> = signal<boolean>(false);
 
   protected mostrarPassword:WritableSignal<boolean> = signal<boolean>(false);
 
@@ -47,15 +52,27 @@ export class Login implements OnInit, OnDestroy {
       email: this.email(),
       password: this.loginForm.value.password
     };
-    this.suscripcionLogin = this.servApiSpring.login(request).subscribe(
-      (response: HttpResponse<ILoginResponse>):void => {{
-          if (response.status === 200) {
-            const token = response.body?.token || '';
-            console.log('Inicio de sesión exitoso. Token:', token);
-          }
+
+    this.suscripcionLogin = this.servApiSpring.login(request).subscribe({
+      next: (response: HttpResponse<ILoginResponse>):void => {
+        if (response.status === 200) {
+          const token: string = response.body?.token || '';
+          localStorage.setItem('JWT', token);
+          this.router.navigateByUrl('/');
+        } else {
+          console.warn('Respuesta inesperada en login:', response.status);
+        }
+      },
+      error: (err: any):void => {
+        // Si el backend devuelve 401 por credenciales inválidas
+        if (err?.status === 401) {
+          this.badPassword.set(true);
+          console.log("hol", this.badPassword());
+        } else {
+          console.error('Error en login:', err);
         }
       }
-    )
+    });
   }
 
   togglePasswordVisibility(): void {

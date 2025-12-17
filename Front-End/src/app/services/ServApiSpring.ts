@@ -3,6 +3,9 @@ import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import ILoginRequest from '../model/ILoginRequest';
 import ILoginResponse from '../model/ILoginResponse';
+import IRegisterRequest from '../model/IRegisterRequest';
+import ITokenRequest from '../model/ITokenRequest';
+import IUsernameResponse from '../model/IUsernameResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +26,34 @@ export class ServApiSpring {
         }
       );
   }
+
   public login( requestBody:ILoginRequest ):Observable<HttpResponse<ILoginResponse>> {
     return this.http
       .post<ILoginResponse>(
         this.baseUrl + 'auth/login',
         requestBody,
+        {
+          observe: 'response'
+        }
+      );
+  }
+
+  public register( rquestBody: IRegisterRequest ):Observable<HttpResponse<void>> {
+    return this.http
+      .post<void>(
+        this.baseUrl + 'auth/register',
+        rquestBody,
+        {
+          observe: 'response'
+        }
+      );
+  }
+
+  public getUsernameFromJWT( token:ITokenRequest ):Observable<HttpResponse<IUsernameResponse>> {
+    return this.http
+      .post<IUsernameResponse>(
+        this.baseUrl + 'api/usuario/username-from-jwt',
+        token,
         {
           observe: 'response'
         }
